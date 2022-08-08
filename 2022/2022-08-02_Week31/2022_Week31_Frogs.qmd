@@ -1,0 +1,321 @@
+---
+title: "#TidyTuesday"
+subtitle: "August 2, 2022 | Oregon Spotted Frogs"
+author: "Jadey N Ryan <br>@jadeynryan <br>GitHub | Twitter"
+execute: 
+  keep-md: true
+format: html
+---
+
+## Data source
+
+#TidyTuesday data source: [USGS Oregon Spotted Frogs](https://github.com/rfordatascience/tidytuesday/tree/master/data/2022/2022-08-02)
+
+### Citation
+
+> Pearl, C.A., Rowe, J.C., McCreary, B., and Adams, M.J., 2022, Oregon spotted frog (*Rana pretiosa*) telemetry and habitat use at Crane Prairie Reservoir in Oregon, USA: U.S. Geological Survey data release, <https://doi.org/10.5066/P9DACPCV>.
+
+## Load packages and data
+
+```{r, message = FALSE}
+library(cowplot)
+library(dplyr)
+library(ggplot2)
+library(ggtext)
+library(glue)
+library(janitor)
+library(knitr)
+library(lubridate)
+library(readr)
+library(showtext)
+library(skimr)
+library(stringr)
+library(sysfonts)
+library(tidyr)
+library(waffle)
+
+frogs <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2022/2022-08-02/frogs.csv')
+```
+
+## Data Exploration
+
+In 2018, the USGS studied the Oregon spotted frog to understand their **movement** and **habitat use** in the late-season (September to November).
+
+Let's take a quick peek at beginning of the data frame and then skim through its structure and summary statistics.
+
+```{r}
+head(frogs)
+skimr::skim(frogs)
+```
+
+### Date wrangling
+
+Since the study was interested in learning about the frogs' movement through the late-season, let's wrangle the SurveyDate column so we can explore their preferred habitats by month.
+
+```{r}
+# Convert survey date class from character to date
+frogs$SurveyDate <- as.Date(frogs$SurveyDate, "%m/%d/%y")
+
+# Create new column for month of observation
+frogs$Month <- lubridate::month(frogs$SurveyDate,
+                                label = TRUE,
+                                abbr = FALSE)
+
+# Move Month after SurveyDate
+frogs <- dplyr::relocate(frogs,
+                         Month,
+                         .after = SurveyDate)
+```
+
+### Some frog questions!
+
+*Frequency* is the unique transmitter frequency associated with each individual frog. To make this more clear, we will change the variable name to FrogID and change the class from Numeric to Factor.
+
+```{r}
+frogs <- dplyr::rename(frogs, FrogID = Frequency)
+frogs$FrogID <- factor(frogs$FrogID)
+```
+
+**How many frogs were tracked?**
+
+```{r}
+n_frogs <- dplyr::n_distinct(frogs$FrogID)
+n_frogs
+```
+
+There were **32** frogs tracked in the study!
+
+**How many times was each frog observed?**
+
+```{r}
+frog_obs <- frogs %>%
+  group_by(FrogID) %>%
+  summarize(Count = n()) %>% 
+  janitor::adorn_totals(where = "row")
+
+knitr::kable(frog_obs)
+
+summary(frog_obs$Count)
+```
+
+A frog was observed as few as **3** times and at most **13** times. The average number of observations for the frogs was about **10**. There were 311 observations of the 32 frogs.
+
+**Which habitat types did the frogs prefer each month?**
+
+```{r}
+tbl_HabType <- table(frogs$Month,
+                     frogs$HabType,
+                     dnn = c("Month", "HabType")) %>%
+  data.frame() %>%
+  subset(Freq > 0) %>%
+  dplyr::arrange(Month, desc(Freq)) %>%
+  split(.[, "Month"], drop = TRUE) %>%
+  purrr::map_df(., janitor::adorn_totals)
+knitr::kable(tbl_HabType)
+```
+
+**Note:** There were more than double the observations in October and November than September. We'll need to make this evident in the final graphic.
+
+Frogs were more often tracked in reservoirs, then ponds, then rivers for each month of the study.
+
+This wouldn't be a very interesting graphic. Let's try something else.
+
+**How does the structure differ based on habitat type?**
+
+```{r}
+tbl_HabType <- table(frogs$HabType,
+                     frogs$Structure,
+                     dnn = c("HabType", "Structure")) %>%
+  data.frame() %>%
+  subset(Freq > 0) %>%
+  dplyr::arrange(HabType, desc(Freq)) %>%
+  split(.[, "HabType"], drop = TRUE) %>%
+  purrr::map_df(., janitor::adorn_totals)
+knitr::kable(tbl_HabType)
+```
+
+This looks more interesting! Let's move on to the most fun part -- DataViz!
+
+## Data Visualization
+
+First, we'll set up our fonts, colors, and text.
+
+```{r}
+# Font
+sysfonts::font_add_google("Poppins", "poppins")
+showtext::showtext_auto()
+
+# Colors
+bg <- "#2C2818"
+fg_text <- "#F5F2E5"
+
+palette <- c("#BEC6A7", "#FFEFF0", "#BDE1D8", "#F5C379", "#E0F3FF")
+
+# Text
+title <- "Where to spot Oregon spotted frogs?"
+
+subtitle <- "Using radio-telemetry, the U.S. Geological Survey monitored Oregon spotted frogs (*Rana pretiosa*) at the Crane Prairie Reservoir. To learn about their movements and seasonal habitat use, frogs were tracked weekly between September and late November of 2018."
+
+caption <- "**#TidyTuesday** | Week 31 | August 2, 2022 <br>
+            **Data**: USGS | doi.org/10.5066/P9DACPCV <br>
+            **DataViz**: @jadeynryan on Twitter and GitHub"
+
+label <- "Each circle is one frog observed in that habitat.\nThere were 311 observations of 32 frogs."
+
+action <- stringr::str_wrap("Try spotting Oregon spotted frogs in the herbaceous areas of the reservoir!", 22)
+
+```
+
+Now for the waffle plots!
+
+```{r}
+plot_frogs <- frogs %>%
+  group_by(HabType, Structure) %>% 
+  summarize(Count = n(), 
+            .groups = "keep") %>% 
+  ggplot(aes(fill = Structure, 
+             values = Count)) +
+  geom_waffle(color = bg,
+              n_rows = 12, 
+              size = 1,
+              flip = TRUE,
+              radius = unit(6, "pt")) +
+  facet_wrap(~HabType, 
+             strip.position = "bottom") +
+  labs(
+    title = title,
+    subtitle = subtitle,
+    caption = caption
+  ) +
+  scale_fill_manual(values = palette) +
+  scale_x_discrete(expand = c(0,0)) +
+  scale_y_continuous(expand = c(0,0)) +
+  coord_equal() +
+  theme_minimal() +
+  waffle::theme_enhance_waffle() +
+  theme(
+    # Background
+    panel.background = element_rect(fill = bg, 
+                                    color = bg),
+    plot.background = element_rect(fill = bg,
+                                   color = bg),
+    # Facet Label
+    strip.text = element_text(color = fg_text,
+                              face = "bold",
+                              size = 16,
+                              hjust = 0.5),
+    # Text
+    plot.title = element_text(color = fg_text,
+                              size = 20,
+                              face = "bold",
+                              margin = margin(12,12,12,12)), 
+    plot.subtitle = element_textbox_simple(color = fg_text, 
+                                           size = 11, 
+                                           lineheight = 1,
+                                           margin = margin(2,6,12,0)),
+    plot.caption = element_markdown(color = fg_text,
+                                    lineheight = 1.2),
+    # Legend
+    legend.position = "none"
+    )
+
+plot_frogs
+```
+
+We'll use `{cowplot}` to draw some explanatory text and create our own pretty legend.
+
+```{r}
+# x location and hjust for legend so each item is aligned
+x <- 0.83
+
+cowplot_frogs <- cowplot::ggdraw() +
+  draw_plot(plot_frogs) +
+  # Action or takeaway point for the reader of the graphic
+  draw_label(
+    label = action,
+    x = 0.174,
+    y = 0.625,
+    color = fg_text,
+    size = 12,
+    fontface = "bold"
+  ) +
+  # Label explaining that each circle is a frog observed
+  draw_label(
+    label = label,
+    x = 0.02,
+    y = 0.045,
+    hjust = 0,
+    vjust = 0,
+    color = fg_text,
+    size = 12,
+    fontface = "bold"
+  ) +
+  # Legend
+  draw_label(
+    label = "Habitat Structure",
+    x = x,
+    y = 0.71,
+    color = fg_text,
+    size = 14,
+    fontface = "bold"
+  ) +
+  draw_line(
+    x = c(0.70, 0.96),
+    y = 0.675,
+    color = fg_text
+  ) +
+  draw_label(
+    label = "Woody vegetation",
+    x = x,
+    y = 0.64,
+    size = 14,
+    fontface = "bold",
+    color = "#E0F3FF"
+  ) +
+  draw_label(
+    label = "Woody debris",
+    x = x,
+    y = 0.59,
+    size = 14,
+    fontface = "bold",
+    color = "#F5C379"
+  ) +
+  draw_label(
+    label = "Open",
+    x = x,
+    y = 0.54,
+    size = 14,
+    fontface = "bold",
+    color = "#BDE1D8"
+  ) +
+  draw_label(
+    label = "Leaf litter",
+    x = x,
+    y = 0.49,
+    size = 14,
+    fontface = "bold",
+    color = "#FFEFF0"
+  ) +
+  draw_label(
+    label = "Herbaceous \nvegetation",
+    x = x,
+    y = 0.42,
+    size = 14,
+    fontface = "bold",
+    color = "#BEC6A7"
+  )
+
+cowplot_frogs
+```
+
+Finally, we'll save the plot!
+
+```{r}
+ggsave("frogs.png")
+```
+
+## Session Info
+
+```{r}
+sessionInfo()
+```
