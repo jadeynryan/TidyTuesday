@@ -17,3 +17,7 @@ such as {[ggplot2](https://ggplot2.tidyverse.org)},
 This repository contains the R code used to produce my Tidy Tuesday
 contributions. Follow my contributions on Twitter:
 [@jadeynryan](https://twitter.com/jadeynryan "Twitter link to @jadeynryan")!
+
+For resources and my workflow for creating accessible data
+visualizations, check out my [Accessibility
+page](https://github.com/jadeynryan/tidytuesday/tree/main/Accessibility).

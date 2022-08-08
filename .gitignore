@@ -29,3 +29,5 @@ vignettes/*.pdf
 .DS_Store
 # Quarto libs and temp figures
 *_files
+# html files
+*/*.html
