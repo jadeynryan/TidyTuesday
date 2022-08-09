@@ -1,14 +1,13 @@
-
-# Creating color blind friendly palettes: workflow and resources
-
-Jadey N Ryan <br>@jadeynryan \| [GitHub](https://github.com/jadeynryan)
-\| [Twitter](https://twitter.com/jadeynryan) <br>2022-08-09
+Creating color blind friendly palettes: workflow and resources
+================
+Jadey N Ryan <br>@jadeynryan on [GitHub](https://github.com/jadeynryan)
+& [Twitter](https://twitter.com/jadeynryan) <br>Updated 2022-08-09
 
 As data scientists, we must effectively use color in our data
 visualizations to help **everyone** quickly and easily understand the
 patterns and relationships in the data.
 
-[\@mxcatnap](https://twitter.com/mxcatnap) on Twitter inspired me to
+[@mxcatnap](https://twitter.com/mxcatnap) on Twitter inspired me to
 create this workflow/resource to create and test color blind friendly
 palettes by posting this [Datawrapper
 article](https://academy.datawrapper.de/article/140-what-to-consider-when-choosing-colors-for-data-visualization),
@@ -18,8 +17,8 @@ which had so many great resources.
 checkers to create a palette.**
 
 -   [**Adobe Color Wheel**](https://color.adobe.com/create/color-wheel/)
-    -   Choose color harmony rule, customize, and then click 'check for
-        accessibility'.
+    -   Choose color harmony rule, customize, and then click ‘check for
+        accessibility’.
 
     -   Limit of 5 colors.
 
@@ -37,7 +36,7 @@ checkers to create a palette.**
         Helper](images/chromajs.png)
 -   [**i want hue**](https://medialab.github.io/iwanthue/)
     -   Set your color space, check improve for the colorblind, choose
-        number of colors, and then click 'make a palette'.
+        number of colors, and then click ‘make a palette’.
 
     -   Provides differentiation report and color vision deficiency with
         emojis.
@@ -47,7 +46,7 @@ checkers to create a palette.**
         ![Screenshot of i want hue](images/iwanthue.png)
 -   [**Colorgorical**](http://vrl.cs.brown.edu/color)
     -   Choose number of colors, score importance, hue filters,
-        lightness range, and starting colors, and then click 'generate'.
+        lightness range, and starting colors, and then click ‘generate’.
 
     -   Provides choropleth maps and various chart types to see your
         colors in action.
@@ -60,7 +59,7 @@ checkers to create a palette.**
 
 -   [**Viz Palette**](https://projects.susielu.com/viz-palette)
 
-    -   Paste your color codes then click 'add' or 'replace' to see your
+    -   Paste your color codes then click ‘add’ or ‘replace’ to see your
         colors in action in various chart types and color blindness
         types. View a color report that specifies which colors may be
         difficult to tell apart. It also identifies possible name

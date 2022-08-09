@@ -1,6 +1,6 @@
 ---
 title: "#TidyTuesday <br>Week 31 of 2022 | Oregon Spotted Frogs"
-author: "Jadey N Ryan <br>@jadeynryan <br>GitHub | Twitter"
+author: "Jadey N Ryan <br>@jadeynryan on [GitHub](https://github.com/jadeynryan) & [Twitter](https://twitter.com/jadeynryan) <br>Updated `r Sys.Date()`"
 format: gfm
 ---
 

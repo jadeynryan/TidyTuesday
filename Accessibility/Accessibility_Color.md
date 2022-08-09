@@ -1,7 +1,7 @@
 Creating color blind friendly palettes: workflow and resources
 ================
-Jadey N Ryan <br>@jadeynryan \| [GitHub](https://github.com/jadeynryan)
-\| [Twitter](https://twitter.com/jadeynryan) <br>2022-08-09
+Jadey N Ryan <br>@jadeynryan on [GitHub](https://github.com/jadeynryan)
+& [Twitter](https://twitter.com/jadeynryan) <br>Updated 2022-08-09
 
 As data scientists, we must effectively use color in our data
 visualizations to help **everyone** quickly and easily understand the

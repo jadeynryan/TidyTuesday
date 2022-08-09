@@ -1,6 +1,6 @@
 ---
 title: "Creating color blind friendly palettes: workflow and resources"
-author: "Jadey N Ryan <br>@jadeynryan | [GitHub](https://github.com/jadeynryan) | [Twitter](https://twitter.com/jadeynryan) <br>`r Sys.Date()`"
+author: "Jadey N Ryan <br>@jadeynryan on [GitHub](https://github.com/jadeynryan) & [Twitter](https://twitter.com/jadeynryan) <br>Updated `r Sys.Date()`"
 format: gfm
 ---
 

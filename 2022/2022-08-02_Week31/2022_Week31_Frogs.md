@@ -1,6 +1,7 @@
 \#TidyTuesday <br>Week 31 of 2022 \| Oregon Spotted Frogs
 ================
-Jadey N Ryan <br>@jadeynryan <br>GitHub \| Twitter
+Jadey N Ryan <br>@jadeynryan on [GitHub](https://github.com/jadeynryan)
+& [Twitter](https://twitter.com/jadeynryan) <br>Updated 2022-08-09
 
 ## Data source
 

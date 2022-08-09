@@ -1,7 +1,9 @@
+\#TidyTuesday
+================
+Jadey N Ryan <br>@jadeynryan on [GitHub](https://github.com/jadeynryan)
+& [Twitter](https://twitter.com/jadeynryan) <br>Updated 2022-08-09
 
-## TidyTuesday
-
-[\#TidyTuesday](https://github.com/rfordatascience/tidytuesday/blob/master/README.md)
+[**\#TidyTuesday**](https://github.com/rfordatascience/tidytuesday/blob/master/README.md)
 is a project aimed at the R ecosystem where a new dataset is delivered
 weekly. The project emerged as a collaborative idea from the R4DS Online
 Learning Community and the [R for Data Science](https://r4ds.had.co.nz)
@@ -21,3 +23,15 @@ contributions. Follow my contributions on Twitter:
 For resources and my workflow for creating accessible data
 visualizations, check out my [Accessibility
 page](https://github.com/jadeynryan/tidytuesday/tree/main/Accessibility).
+
+------------------------------------------------------------------------
+
+#### [2022 \| Week 31](https://github.com/jadeynryan/TidyTuesday/tree/main/2022/2022-08-02_Week31)
+
+Data: [USGS Oregon spotted frogs](https://doi.org/10.5066/P9DACPCV)
+
+<div>
+
+[![](2022/2022-08-02_Week31/frogs.png)](https://github.com/jadeynryan/TidyTuesday/blob/main/2022/2022-08-02_Week31/frogs.png)
+
+</div>
