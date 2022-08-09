@@ -1,11 +1,7 @@
 ---
-title: "Creating color blind friendly palettes"
-subtitle: "Workflow and resources"
-date: "`r Sys.Date()`"
-author: "Jadey N Ryan (@jadeynryan) <br>[GitHub](https://github.com/jadeynryan) | [Twitter](https://twitter.com/jadeynryan)"
-execute: 
-  keep-md: true
-format: html
+title: "Creating color blind friendly palettes: workflow and resources"
+author: "Jadey N Ryan <br>@jadeynryan | [GitHub](https://github.com/jadeynryan) | [Twitter](https://twitter.com/jadeynryan) <br>`r Sys.Date()`"
+format: gfm
 ---
 
 As data scientists, we must effectively use color in our data visualizations to help **everyone** quickly and easily understand the patterns and relationships in the data.

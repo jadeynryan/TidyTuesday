@@ -30,4 +30,4 @@ vignettes/*.pdf
 # Quarto libs and temp figures
 *_files
 # html files
-*/*.html
+*.html

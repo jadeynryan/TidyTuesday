@@ -1,10 +1,7 @@
 ---
-title: "#TidyTuesday"
-subtitle: "August 2, 2022 | Oregon Spotted Frogs"
+title: "#TidyTuesday <br>Week 31 of 2022 | Oregon Spotted Frogs"
 author: "Jadey N Ryan <br>@jadeynryan <br>GitHub | Twitter"
-execute: 
-  keep-md: true
-format: html
+format: gfm
 ---
 
 ## Data source
@@ -80,7 +77,6 @@ frogs$FrogID <- factor(frogs$FrogID)
 
 ```{r}
 n_frogs <- dplyr::n_distinct(frogs$FrogID)
-n_frogs
 ```
 
 There were **32** frogs tracked in the study!
